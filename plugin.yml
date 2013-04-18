@@ -1,26 +1,6 @@
 name: PEXhelper
 main: fi.sweetmoon.pexhelper.PEXhelper
-version: 0.4
+version: 0.5
 description: Helper plugin for doubleranks using plugin "ontime".
 author: tssge
 depend: [Vault]
-commands:
-   pexhelper:
-      description: Komento, jolla hallitaan pelaajien "ontime" arvoa.
-      usage: |
-          Käytä komentoa /help pexhelper [alikomento] saadaksesi lisätietoa.
-          /pexhelper timedemote [pelaaja]
-          /pexhelper timepromote [pelaaja]
-          /pexhelper timegroupset [pelaaja] [0-3]
-   pexhelper timedemote:
-      description: Laskee pelaajan "ontime" arvoa.
-      usage: /[komento] [pelaaja]
-      permissions: pexhelper.timedemote
-   pexhelper timepromote:
-      description: Nostaa pelaajan "ontime" arvoa.
-      usage: /[komento] [pelaaja]
-      permissions: pexhelper.timedemote
-   pexhelper timegroupset:
-      description: Asettaa pelaajan "ontime" arvon.
-      usage: /[komento] [pelaaja] [0/1/2/3]
-      permissions: pexhelper.timegroupset
