@@ -50,8 +50,11 @@ public class PEXhelper extends JavaPlugin
 			if (primaryGroup.split(" ")[0].equals(PROMOTION_GROUPS[i])) {
 				perms.playerRemoveGroup((World) null, player, primaryGroup);
 				perms.playerAddGroup((World) null, player, String.format("%s %s", PROMOTION_GROUPS[i+1], primaryGroup.split(" ")[1]));
+				call.reply("Pelaajan %s ontime-rank asetettu arvoon %s!", player, PROMOTION_GROUPS[i+1]);
+				return;
 			}
 		}
+		call.reply("{RED}Pelaajaa %s ei ole olemassa tai hän on jo maksimiarvossa.", player);
 	}
 	
 	// /pexhelper timedemote -command, mostly same stuff as the timepromote one
@@ -65,8 +68,11 @@ public class PEXhelper extends JavaPlugin
 			if (primaryGroup.split(" ")[0].equals(PROMOTION_GROUPS[i])) {
 				perms.playerRemoveGroup((World) null, player, primaryGroup);
 				perms.playerAddGroup((World) null, player, String.format("%s %s", PROMOTION_GROUPS[i-1], primaryGroup.split(" ")[1]));
+				call.reply("Pelaajan %s ontime-rank asetettu arvoon %s!", player, PROMOTION_GROUPS[i-1]);
+				return;
 			}
 		}
+		call.reply("{RED}Pelaajaa %s ei ole olemassa tai hän on jo minimiarvossa.", player);
 	}
 	
 	// /pexhelper timegroupset -command
@@ -86,6 +92,8 @@ public class PEXhelper extends JavaPlugin
 				if (rank.equalsIgnoreCase(PROMOTION_GROUPS[i])) {
 					perms.playerRemoveGroup((World) null, player, primaryGroup);
 					perms.playerAddGroup((World) null, player, String.format("%s %s", PROMOTION_GROUPS[i], primaryGroup.split(" ")[1]));
+					call.reply("Pelaajan %s ontime-rank asetettu arvoon %s!", player, PROMOTION_GROUPS[i]);
+					return;
 				}
 			}
 			return;
@@ -97,7 +105,10 @@ public class PEXhelper extends JavaPlugin
 			String primGrp = perms.getPrimaryGroup((World) null, player);
 			perms.playerRemoveGroup((World) null, player, primaryGroup);
 			perms.playerAddGroup((World) null, player, String.format("%s %s", PROMOTION_GROUPS[rankInt], primGrp.split(" ")[1]));
+			call.reply("Pelaajan %s ontime-rank asetettu arvoon %s!", player, PROMOTION_GROUPS[rankInt]);
+			return;
 		}
+		call.reply("{RED}Pelaajalle %s ei voitu asettaa ontime-rankkia, koska annoit virheellisen arvon.", player);
 	}
 	
 	private boolean setupPermissions() {
