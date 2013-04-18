@@ -35,7 +35,6 @@ public class PEXhelper extends JavaPlugin
 		MondoCommand base = new MondoCommand();
 		base.autoRegisterFrom(this);
 		getCommand("pexhelper").setExecutor(base);
-		getCommand("ph").setExecutor(base);
 		
 	}
 	

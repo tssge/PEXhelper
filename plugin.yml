@@ -4,3 +4,5 @@ version: 0.5
 description: Helper plugin for doubleranks using plugin "ontime".
 author: tssge
 depend: [Vault]
+commands:
+  pexhelper:
