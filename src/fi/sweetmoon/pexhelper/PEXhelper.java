@@ -13,7 +13,6 @@ import net.milkbowl.vault.permission.Permission;
 
 public class PEXhelper extends JavaPlugin
 {
-	private static PEXhelper plugin;
 	protected static final Logger logger = Logger.getLogger("PEXhelper");
 	public static Permission perms = null;
 	public static final String[] PROMOTION_GROUPS  = {
@@ -22,7 +21,6 @@ public class PEXhelper extends JavaPlugin
 	
 	@Override
 	public void onEnable() {
-		plugin = this;
 		
 		// Setup Vault perms, if fails, disable this plugin
 		if (!setupPermissions() ) {
