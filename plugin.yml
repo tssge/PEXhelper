@@ -1,8 +1,9 @@
 name: PEXhelper
 main: fi.sweetmoon.pexhelper.PEXhelper
-version: 0.6
+version: 0.8
 description: Helper plugin for doubleranks using plugin "ontime".
 author: tssge
 depend: [Vault]
 commands:
   pexhelper:
+    aliases: [ph,pexhelp]

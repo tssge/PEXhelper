@@ -18,6 +18,9 @@ public class PEXhelper extends JavaPlugin
 	public static final String[] PROMOTION_GROUPS  = {
 			"Uusi", "Kokenut", "Uskollinen", "Kunnioitettava"
 		};
+	public static final String[] PRIMARY_GROUPS = {
+		"pelaaja", "lahjoittaja", "moderaattori", "operaattori", "admin"
+	};
 	
 	@Override
 	public void onEnable() {
@@ -37,7 +40,7 @@ public class PEXhelper extends JavaPlugin
 	}
 	
 	// /pexhelper timepromote -command
-	@Sub(description="Nostaa pelaajan ontime-rankkia.", minArgs=1, usage="<pelaaja>", permission="pexhelper.timepromote")
+	@Sub(description="Nostaa ontime-rank.", minArgs=1, usage="<pelaaja>", permission="pexhelper.timepromote")
 	public void timepromote(CallInfo call) {
 		String player = call.getArg(0);
 		// Need to cast null to object World, null is an ok arg according to javadocs
@@ -56,7 +59,7 @@ public class PEXhelper extends JavaPlugin
 	}
 	
 	// /pexhelper timedemote -command, mostly same stuff as the timepromote one
-	@Sub(description="Laskee pelaajan ontime-rankkia.", minArgs=1, usage="<pelaaja>", permission="pexhelper.timedemote")
+	@Sub(description="Laskee ontime-rank.", minArgs=1, usage="<pelaaja>", permission="pexhelper.timedemote")
 	public void timedemote(CallInfo call){
 		String player = call.getArg(0);
 		String primaryGroup = perms.getPrimaryGroup((World) null, player);
@@ -74,7 +77,7 @@ public class PEXhelper extends JavaPlugin
 	}
 	
 	// /pexhelper timegroupset -command
-	@Sub(description="Vaihtaa pelaajan ontime-rankin valittuun rankkiin.", minArgs=2, usage="<pelaaja> <rank (0-3)>", permission="pexhelper.timegroupset")
+	@Sub(description="Asettaa ontime-rank.", minArgs=2, usage="<pelaaja> <rank (0-3)>", permission="pexhelper.timegroupset")
 	public void timegroupset(CallInfo call) {
 		String player = call.getArg(0);
 		String rank = call.getArg(1);
@@ -94,6 +97,7 @@ public class PEXhelper extends JavaPlugin
 					return;
 				}
 			}
+			call.reply("{RED}Pelaajalle %s ei voitu asettaa ontime-rankkia, koska annoit virheellisen arvon.", player);
 			return;
 	    }
 	    
@@ -107,6 +111,40 @@ public class PEXhelper extends JavaPlugin
 			return;
 		}
 		call.reply("{RED}Pelaajalle %s ei voitu asettaa ontime-rankkia, koska annoit virheellisen arvon.", player);
+	}
+	
+	// /pexhelper rankpromote -command
+	@Sub(description="Nostaa rankkia.", minArgs=1, usage="<pelaaja>", permission="pexhelper.rankpromote")
+	public void rankpromote(CallInfo call) {
+		String player = call.getArg(0);
+		String primaryGroup = perms.getPrimaryGroup((World) null, player);
+		
+		for (int i=0; i < PRIMARY_GROUPS.length - 1; i++) {
+			if (primaryGroup.split(" ")[1].equals(PRIMARY_GROUPS[i])) {
+				perms.playerRemoveGroup((World) null, player, primaryGroup);
+				perms.playerAddGroup((World) null, player, String.format("%s %s", primaryGroup.split(" ")[0], PRIMARY_GROUPS[i+1]));
+				call.reply("Pelaajan %s rank asetettu arvoon %s!", player, PRIMARY_GROUPS[i+1]);
+				return;
+			}
+		}
+		call.reply("{RED}Pelaajaa %s ei ole olemassa tai hän on jo maksimiarvossa.", player);
+	}
+	
+	// /pexhelper rankdemote -command
+	@Sub(description="Laskee rankkia.", minArgs=1, usage="<pelaaja>", permission="pexhelper.rankdemote")
+	public void rankdemote(CallInfo call) {
+		String player = call.getArg(0);
+		String primaryGroup = perms.getPrimaryGroup((World) null, player);
+		
+		for (int i = PRIMARY_GROUPS.length - 1; i>0; i--) {
+			if (primaryGroup.split(" ")[1].equals(PRIMARY_GROUPS[i])) {
+				perms.playerRemoveGroup((World) null, player, primaryGroup);
+				perms.playerAddGroup((World) null, player, String.format("%s %s", primaryGroup.split(" ")[0], PRIMARY_GROUPS[i-1]));
+				call.reply("Pelaajan %s ontime-rank asetettu arvoon %s!", player, PRIMARY_GROUPS[i-1]);
+				return;
+			}
+		}
+		call.reply("{RED}Pelaajaa %s ei ole olemassa tai hän on jo minimiarvossa.", player);
 	}
 	
 	private boolean setupPermissions() {
