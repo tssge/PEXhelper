@@ -119,6 +119,7 @@ public class PEXhelper extends JavaPlugin
 		String player = call.getArg(0);
 		String primaryGroup = perms.getPrimaryGroup((World) null, player);
 		
+		// Same stuff as the ontime ones, just changing the latter group instead of the first one
 		for (int i=0; i < PRIMARY_GROUPS.length - 1; i++) {
 			if (primaryGroup.split(" ")[1].equals(PRIMARY_GROUPS[i])) {
 				perms.playerRemoveGroup((World) null, player, primaryGroup);
